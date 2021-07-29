@@ -89,7 +89,7 @@ module.exports = {
       },
     ]
   },
-  order: 2,
+  order: 3,
   computed: [
     {
       name: 'downPayment',
