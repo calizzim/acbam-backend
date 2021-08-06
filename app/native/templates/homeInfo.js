@@ -3,6 +3,13 @@ const propertyTaxes = new PropertyTaxes()
 const ChartFunctions = require('../classes/ChartFunctions')
 
 module.exports = {
+  dependencies: {
+    hard: [
+      'salaryInfo'
+    ],
+    soft: [
+    ]
+  },
   template: {
     title: 'Housing',
     showTitle: false,
@@ -86,7 +93,6 @@ module.exports = {
       },
     ]
   },
-  order: 1,
   computed: [
     {
       name: 'downPayment',

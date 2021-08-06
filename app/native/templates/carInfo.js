@@ -1,6 +1,13 @@
 const ChartFunctions = require('../classes/ChartFunctions')
-
 module.exports = {
+  dependencies: {
+    hard: [
+      'salaryInfo'
+    ],
+    soft: [
+      'homeInfo'
+    ]
+  },
   template: {
     title: 'Transportation',
     showTitle: false,
@@ -89,7 +96,6 @@ module.exports = {
       },
     ]
   },
-  order: 3,
   computed: [
     {
       name: 'downPayment',

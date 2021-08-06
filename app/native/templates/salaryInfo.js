@@ -3,6 +3,12 @@ const taxHelper = new Taxes();
 const ChartFunctions = require("../classes/ChartFunctions");
 
 module.exports = {
+  dependencies: {
+    hard: [
+    ],
+    soft: [
+    ]
+  },
   template: {
     title: "Savings",
     showTitle: false,
@@ -107,7 +113,6 @@ module.exports = {
       },
     ],
   },
-  order: 0,
   computed: [
     {
       name: "pretaxSalary",
