@@ -7,6 +7,7 @@ const fs = require('fs')
 
 module.exports = class {
     constructor() {
+        fs.write
         this.header = config.get('taxeeHeader')
         this.taxee = axios.create({
             baseURL: "http://taxee.io/api/v2/",
@@ -40,7 +41,7 @@ module.exports = class {
         return this.states.find(e => e.name == state).abbreviation
     }
 
-    getTaxes(retirementContribution, pretaxSalary, state, filingStatus) {
+    _getTaxes(retirementContribution, pretaxSalary, state, filingStatus) {
         let stateAbbrev = this.getAbbrev(state)
         let federalTaxes = this.taxes.federal[filingStatus]
         let stateTaxes = this.taxes.state[stateAbbrev][filingStatus]
@@ -53,4 +54,17 @@ module.exports = class {
         taxes.total = Object.keys(taxes).reduce((a,c) => a + taxes[c],0)
         return taxes
     }
+
+    getTaxes(pretaxSalary, savingsPercentage, state, filingStatus) {
+      let retirementContribution = 19500
+      let taxes = [this._getTaxes(retirementContribution, pretaxSalary, state, filingStatus)]
+      while(true) {
+        retirementContribution = Math.min((pretaxSalary - taxes.slice(-1)[0].total) * savingsPercentage / 100, 19500)
+        taxes.push(this._getTaxes(retirementContribution, pretaxSalary, state, filingStatus))
+        if(Math.abs(taxes.slice(-1)[0].total - taxes.slice(-2)[0].total) < 1) break
+      }
+      return taxes.slice(-1)[0]
+    }
+
+
 }

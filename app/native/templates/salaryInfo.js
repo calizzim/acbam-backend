@@ -23,7 +23,7 @@ module.exports = {
             type: "text",
             name: "pretaxSalary",
             validators: "currency",
-            hint: "salary in dollars (include 401k matching)",
+            hint: "monthly or yearly salary in dollars",
           },
           {
             dType: String,
@@ -37,7 +37,7 @@ module.exports = {
             type: "text",
             name: "salaryGrowthPercentage",
             validators: "integer",
-            hint: "how much do you expect your salary to grow every year?",
+            hint: "By what percent do you expect your salary to grow every year? The national average is around 3%",
             defaultValue: "3",
           },
         ],
@@ -69,24 +69,16 @@ module.exports = {
           {
             dType: Number,
             type: "text",
-            name: "yearlyRetirementFundContribution",
-            validators: "currency",
-            hint: "yearly contribution to 401k (max $19,500)",
-            defaultValue: "19500",
-          },
-          {
-            dType: Number,
-            type: "text",
             name: "savingPercentage",
             validators: "number",
-            hint: "additional savings percentage after taxes",
+            hint: "What percent of your post tax salary do you want to save? We assume that you will max your 401k contribution ($19,500) before saving in other accounts in order to minimize federal and state income tax.",
           },
           {
             dType: Number,
             type: "text",
             name: "investmentReturns",
-            validators: "integer",
-            hint: "yearly returns on investments",
+            validators: "number",
+            hint: "What percent returns do you expect to make on your savings? The Dow has averaged 10.7 percent over the last 30 years.",
             defaultValue: "7",
           },
         ],
@@ -129,18 +121,16 @@ module.exports = {
         let xvalues = [...Array(numMonths + 1).keys()]
         let yvalues = xvalues.slice(1).reduce((a,c,i) => {
           let pretaxSalary = a[i].pretaxSalary * (native.salaryGrowthPercentage/1200 + 1)
-          let contribution = native.yearlyRetirementFundContribution
-          let taxes = taxHelper.getTaxes(contribution, pretaxSalary, native.state, native.filingStatus)
-          let additional = (pretaxSalary - taxes.total) * native.savingPercentage/100
-          let savings = { contribution, additional, total: contribution + additional }
-          let totalSavings = (a[i].totalSavings + savings.total/12) * (1+native.investmentReturns/1200)
-          a.push({ 
+          let taxes = taxHelper.getTaxes(pretaxSalary, native.savingPercentage, native.state, native.filingStatus)
+          let savings = (pretaxSalary - taxes.total) * native.savingPercentage / 100
+          let totalSavings = (a[i].totalSavings + savings/12) * (1+native.investmentReturns/1200)
+          return a.concat({ 
             pretaxSalary, 
             taxes, 
             savings, 
             totalSavings, 
-            leftOver: pretaxSalary - taxes.total - savings.total })
-          return a
+            leftOver: pretaxSalary - taxes.total - savings
+          })
         },
         [{
           totalSavings: 0,
@@ -168,7 +158,7 @@ module.exports = {
       compute: (native,computed,previous) => {
         let labels = ['federal taxes','fica','state taxes','total savings','left for discretionary spending']
         let yvalues = computed.dataOverTime.yvalues.slice(1).map(v => {
-          return [v.taxes.federal,v.taxes.fica,v.taxes.state,v.savings.total,v.leftOver]
+          return [v.taxes.federal,v.taxes.fica,v.taxes.state,v.savings,v.leftOver]
         })
         return {labels, yvalues}
       }

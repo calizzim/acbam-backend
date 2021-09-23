@@ -99,6 +99,10 @@ module.exports = {
       compute: (native,computed,previous) => native.downPaymentPercent * native.desiredHomeValue / 100
     },
     {
+      name: 'currentAge',
+      compute: (native,computed,previous) => previous.salaryInfo.native.currentAge
+    },
+    {
       name: 'principal',
       compute: (native,computed,previous) => native.desiredHomeValue - computed.downPayment
     },

@@ -12,9 +12,9 @@ module.exports = {
     ]
   },
   computed: [
-      { name: 'test',
+      { name: 'currentAge',
       compute: (native,computed,previous) => {
-        return 'hello'
+        return previous.salaryInfo.native.currentAge
       }},
       {
         name: 'dataOverTime',
@@ -27,7 +27,7 @@ module.exports = {
           let xvalues = savingsData.xvalues.slice(1)
           let yvalues = xvalues.map((c,i) => {
             obj = {
-              savings: savingsData.yvalues[i+1].savings.total/12,
+              savings: savingsData.yvalues[i+1].savings/12,
               housing: housingData.yvalues[i+1].payments.total,
               transportation: transportationData.yvalues[i+1].payments.total,
               food: otherData.yvalues[i+1].food,
