@@ -24,34 +24,38 @@ module.exports = {
                       type: 'text',
                       name: 'averageGroceryTripCost',
                       validators: 'currency',
-                      hint: 'how much do you spend on average at the grocery store?'
-                  },
-                  {
+                      hint: 'how much do you spend on average at the grocery store?',
+                      defaultValue: 100
+                    },
+                    {
                       dType: Number,
                       type: 'text',
                       name: 'groceryTimesPerMonth',
                       validators: 'integer',
-                      hint: 'how many times per month do you go shopping?'
-                  },
-              ],
-          },
-          {
-              title: 'eatingOut',
-              showTitle: true,
-              components: [
-                  {
+                      hint: 'how many times per month do you go shopping?',
+                      defaultValue: 4
+                    },
+                  ],
+                },
+                {
+                  title: 'eatingOut',
+                  showTitle: true,
+                  components: [
+                    {
                       dType: Number,
                       type: 'text',
                       name: 'averageEatOutCost',
                       validators: 'currency',
-                      hint: 'how much do you spend when you eat out?'
-                  },
+                      hint: 'how much do you spend when you eat out?',
+                      defaultValue: 15
+                    },
                   {
                       dType: Number,
                       type: 'text',
                       name: 'eatOutTimesPerMonth',
                       validators: 'integer',
-                      hint: 'how many times per month do you eat out?'
+                      hint: 'how many times per month do you eat out?',
+                      defaultValue: 10
                   },
               ],
           },
@@ -64,14 +68,16 @@ module.exports = {
                       type: 'text',
                       name: 'gymMembershipCost',
                       validators: 'currency',
-                      hint: 'do you have a monthly gym membership?'
+                      hint: 'do you have a monthly gym membership?',
+                      defaultValue: 50
                   },
                   {
                       dType: Number,
                       type: 'text',
                       name: 'healthInsurance',
                       validators: 'integer',
-                      hint: 'what are your monthly health insurance premiums?'
+                      hint: 'what are your monthly health insurance premiums?',
+                      defaultValue: 100
                   },
               ],
           },
@@ -84,35 +90,40 @@ module.exports = {
                       type: 'text',
                       name: 'internet',
                       validators: 'currency',
-                      hint: 'monthly internet cost'
+                      hint: 'monthly internet cost',
+                      defaultValue: 50
                   },
                   {
                       dType: Number,
                       type: 'text',
                       name: 'cellPhone',
                       validators: 'currency',
-                      hint: 'how much do you pay for cell service?'
+                      hint: 'how much do you pay for cell service?',
+                      defaultValue: 60
                   },
                   {
                       dType: Number,
                       type: 'text',
                       name: 'electricity',
                       validators: 'currency',
-                      hint: 'whats your average monthly electricity bill?'
+                      hint: 'whats your average monthly electricity bill?',
+                      defaultValue: 30
                   },
                   {
                       dType: Number,
                       type: 'text',
                       name: 'water',
                       validators: 'currency',
-                      hint: 'whats your average monthly water bill?'
+                      hint: 'whats your average monthly water bill?',
+                      defaultValue: 20
                   },
                   {
                       dType: Number,
                       type: 'text',
                       name: 'television',
                       validators: 'currency',
-                      hint: 'netflix? hulu? cable? put monthly total here'
+                      hint: 'netflix? hulu? cable? put monthly total here',
+                      defaultValue: 10
                   },
               ],
           },
